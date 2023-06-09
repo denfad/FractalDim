@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.input.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="647.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.denfad.fractaldim.Controller.MainController">
+    <children>
+        <BorderPane layoutX="200.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <top>
+                <MenuBar useSystemMenuBar="false">
+                    <menus>
+                        <Menu mnemonicParsing="false" text="File">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#downloadFractalClick" text="Open time series">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                    </accelerator>
+                                </MenuItem>
+                                <MenuItem mnemonicParsing="false" onAction="#saveFractalClick" text=" Save time series">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                    </accelerator>
+                                </MenuItem>
+                            </items>
+                            <accelerator>
+                                <KeyCodeCombination alt="DOWN" code="F" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Generate">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#generateNormalClick" text="Normal distribution">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                                    </accelerator>
+                                </MenuItem>
+                                <MenuItem mnemonicParsing="false" onAction="#generateLogisticClick" text="Logistic distribution">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="L" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                                    </accelerator>
+                                </MenuItem>
+                            </items>
+                            <accelerator>
+                                <KeyCodeCombination alt="DOWN" code="G" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="View">
+                            <items>
+
+                                <CheckMenuItem mnemonicParsing="false" onAction="#trancparentClick" text="Transparent points">
+                                </CheckMenuItem>
+                                <CheckMenuItem mnemonicParsing="false" onAction="#trancparentLineClick" text="Transparent lines">
+                                </CheckMenuItem>
+                            </items>
+                        </Menu>
+
+                    </menus>
+                </MenuBar>
+
+            </top>
+            <center>
+
+                <VBox alignment="CENTER" style="-fx-background-color: white;">
+                    <children>
+                        <Label fx:id="SpectrText" alignment="CENTER" contentDisplay="CENTER" text="Расчёт функции спектра мощности" wrapText="true">
+                            <font>
+                                <Font name="Avenir Book" size="16.0" />
+                            </font>
+                        </Label>
+                        <LineChart fx:id="chartView" animated="false" style="-fx-background-color: white;" VBox.vgrow="ALWAYS">
+                            <xAxis>
+                                <NumberAxis label="ln(ω)" side="BOTTOM" />
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis label="ln(S(ω))" side="LEFT" />
+                            </yAxis>
+                        </LineChart>
+
+                    </children>
+                </VBox>
+
+            </center>
+            <right>
+
+            </right>
+            <left>
+                <VBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
+                    <children>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#saveFractalClick" prefHeight="26.0" prefWidth="110.0" text="💾 Сохранить" />
+                        <Button mnemonicParsing="false" onAction="#downloadFractalClick" prefHeight="26.0" prefWidth="110.0" text="📁Открыть">
+                           <HBox.margin>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                        <TreeView fx:id="chartsTree" focusTraversable="false" prefHeight="219.0" prefWidth="268.0" BorderPane.alignment="CENTER" />
+                        <Button alignment="TOP_LEFT" focusTraversable="false" mnemonicParsing="false" onAction="#getDimensionClick" style="-fx-background-radius: 0;" text="Рассчитать размерность">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </VBox.margin>
+                        </Button>
+                        <Group>
+                            <children>
+                                <VBox style="-fx-background-color: #eeeeee;" BorderPane.alignment="CENTER">
+                                    <Label fx:id="NPointText" text="Колличество точек N: " wrapText="true">
+                                        <VBox.margin>
+                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                        </VBox.margin>
+                                        <font>
+                                            <Font name="Avenir Book" size="16.0" />
+                                        </font>
+                                    </Label>
+                                    <Label fx:id="SAngleText" text="Параметр наклона прямой s:" wrapText="true">
+                                        <VBox.margin>
+                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                        </VBox.margin>
+                                        <font>
+                                            <Font name="Avenir Book" size="16.0" />
+                                        </font>
+                                    </Label>
+
+                                    <Label fx:id="dimensionLabel" alignment="CENTER" text="Фрактальная размерность: " wrapText="true">
+                                        <font>
+                                            <Font name="Arial" size="20.0" />
+                                        </font>
+                                        <padding>
+                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                        </padding>
+                                    </Label>
+                                </VBox>
+                            </children>
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                        </Group>
+
+                    </children>
+                </VBox>
+
+            </left>
+
+        </BorderPane>
+    </children>
+</AnchorPane>
